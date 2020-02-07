@@ -10,11 +10,14 @@
 </head>
 
 <body>
-<nav class="navbar navbar-light bg-dark">
-    <a class="navbar-brand mb-0 text-white h1" href="/">Todo App</a>
-</nav>
+    <nav class="navbar navbar-light bg-dark">
+        <a class="navbar-brand mb-0 text-white h1" href="/">Todo App</a>
+    </nav>
 
-@yield("content")
+    <div class="container">
+        @yield("content")
+    </div>
+
 
 </body>
 </html>
