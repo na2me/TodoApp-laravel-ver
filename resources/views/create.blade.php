@@ -9,6 +9,25 @@
 
     <div class="container" id="formgroup">
 
+    <form action="/todo" method="post">
+        <div>
+            <label for="name">Name : </label>
+            <input type="text" id="name">
+        </div>
+
+        <div>
+            <label for="end_date">End Date : </label>
+            <input type="date" id="end_date">
+        </div>
+
+        <div>
+            <input type="submit" value="Create">
+        </div>
+
+
+    </form>
+
+
     </div>
 
 

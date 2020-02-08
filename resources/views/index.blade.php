@@ -7,34 +7,41 @@
     </div>
 
     <div class="container" id="formgroup">
-        <p>
-            <label for="name">Name : </label>
-            <input  type="text" id="name">
-        </p>
+        <form action="/todo" method="post">
+            <div>
+                <label for="name">Name : </label>
+                <input  type="text" id="name">
+            </div>
 
-        <p>
-            <label for="start">Start : </label>
-            <input type="date" id="start">
-        </p>
+            <div>
+                <label for="start">Start : </label>
+                <input type="date" id="start">
+            </div>
 
-        <p>
-            <label for="end"> End : </label>
-            <input type="date" id="end">
-        </p>
+            <div>
+                <label for="end"> End : </label>
+                <input type="date" id="end">
+            </div>
+
+            <input type="submit" value="Search">
+        </form>
+
     </div>
 
-    @foreach($todo as $t)
-        <p>{{$t->name}}</p>
-        <p>{{$t->start_date}}</p>
-        <p>{{$t->end_date}}</p>
-        @if($t->is_finished == 0)
-            <p>Going</p>
-        @else
-            <p>Done</p>
-        @endif
-    @endforeach
+    <br>
 
-
+    <div class="container">
+        @foreach($todo as $t)
+            <p>{{$t->name}}</p>
+            <p>{{$t->start_date}}</p>
+            <p>{{$t->end_date}}</p>
+            @if($t->is_finished == 0)
+                <p>Going</p>
+            @else
+                <p>Done</p>
+            @endif
+        @endforeach
+    </div>
 
 
 @endsection
