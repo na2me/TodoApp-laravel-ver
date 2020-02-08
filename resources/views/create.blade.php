@@ -7,28 +7,17 @@
     </div>
 
 
-    <div class="container" id="formgroup">
+    {!! Form::open(['method'=>"POST", "action"=>"TodoController@store", "files"=>true]) !!}
+        <div class="container" id="formgroup">
+        {!! Form::label('name', 'Name :') !!}
+        {!! Form::text('name') !!}
 
-    <form action="/todo" method="post">
-        <div>
-            <label for="name">Name : </label>
-            <input type="text" id="name">
+        {!! Form::label('end_date', "End Date :") !!}
+        {!! Form::date('end_date') !!}
+
+        {!! Form::submit('Create') !!}
         </div>
-
-        <div>
-            <label for="end_date">End Date : </label>
-            <input type="date" id="end_date">
-        </div>
-
-        <div>
-            <input type="submit" value="Create">
-        </div>
-
-
-    </form>
-
-
-    </div>
+    {!! Form::close() !!}
 
 
 

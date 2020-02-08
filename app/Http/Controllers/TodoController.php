@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Todo;
 use Illuminate\Http\Request;
+use App\Http\Requests\TodoCreateRequest;
 
 class TodoController extends Controller
 {
@@ -14,8 +15,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todo = Todo::all();
-        return view('index',compact($todo,'todo'));
+        $todos = Todo::all();
+        return view('index',compact($todos,'todos'));
     }
 
     /**
@@ -36,7 +37,7 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

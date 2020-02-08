@@ -31,11 +31,11 @@
     <br>
 
     <div class="container">
-        @foreach($todo as $t)
-            <p>{{$t->name}}</p>
-            <p>{{$t->start_date}}</p>
-            <p>{{$t->end_date}}</p>
-            @if($t->is_finished == 0)
+        @foreach($todos as $todo)
+            <p>{{$todo->name}}</p>
+            <p>{{$todo->start_date}}</p>
+            <p>{{$todo->end_date}}</p>
+            @if($todo->is_finished == 0)
                 <p>Going</p>
             @else
                 <p>Done</p>
