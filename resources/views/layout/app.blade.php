@@ -11,7 +11,8 @@
 
 <body>
     <nav class="navbar navbar-light bg-dark">
-        <a class="navbar-brand mb-0 text-white h1" href="/">Todo App</a>
+        <a class="navbar-brand mb-0 text-white h1" href="/todo">Todo App</a>
+        <a class="navbar-text text-white" href="/todo/create">Create</a>
     </nav>
 
     <div class="container">

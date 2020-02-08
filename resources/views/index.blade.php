@@ -2,7 +2,9 @@
 
 @section("content")
 
-    <h1>Todo List</h1>
+    <div class="container">
+        <h1>Todo List</h1>
+    </div>
 
     <div class="container" id="formgroup">
         <p>
