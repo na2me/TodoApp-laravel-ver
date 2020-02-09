@@ -33,11 +33,15 @@ class TodoController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
+        $sentTodoAttributes=$request->all();
 
+        (new \App\Todo)->todoFactory($sentTodoAttributes["name"],$sentTodoAttributes["end_date"]);
+
+        return redirect('/todo');
     }
 
     /**

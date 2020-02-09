@@ -12,4 +12,13 @@ class Todo extends Model
         'end_date',
         'is_finished'
     ];
+
+    public function todoFactory($name,$endDate){
+//        $todo = new Todo();
+//        $todo->name = $name;
+//        $todo->end_date = $endDate;
+//        $todo->save();
+
+        Todo::create(["name"=>$name,"end_date"=>$endDate]);
+    }
 }
