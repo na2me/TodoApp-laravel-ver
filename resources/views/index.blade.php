@@ -32,14 +32,18 @@
 
     <div class="container">
         @foreach($todos as $todo)
-            <p>{{$todo->name}}</p>
-            <p>{{$todo->start_date}}</p>
-            <p>{{$todo->end_date}}</p>
+            <p>Name : {{$todo->name}}</p>
+            <p>Start Date : {{$todo->start_date}}</p>
+            <p>End Date : {{$todo->end_date}}</p>
             @if($todo->is_finished == 0)
-                <p>Going</p>
+                <p>Status : Going</p>
             @else
-                <p>Done</p>
+                <p>Status : Done</p>
             @endif
+            <a href="{{ route('todo.edit', $todo->id) }}">Edit</a>
+            <br>
+            <br>
+            <br>
         @endforeach
     </div>
 

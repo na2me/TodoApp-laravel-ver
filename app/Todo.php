@@ -13,7 +13,7 @@ class Todo extends Model
         'is_finished'
     ];
 
-    public function todoFactory($name,$endDate){
+    public function createTodo($name, $endDate){
 //        $todo = new Todo();
 //        $todo->name = $name;
 //        $todo->end_date = $endDate;

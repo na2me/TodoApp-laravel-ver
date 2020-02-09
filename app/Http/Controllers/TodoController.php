@@ -16,7 +16,7 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::all();
-        return view('index',compact($todos,'todos'));
+        return view('index',compact("todos"));
     }
 
     /**
@@ -39,7 +39,7 @@ class TodoController extends Controller
     {
         $sentTodoAttributes=$request->all();
 
-        (new \App\Todo)->todoFactory($sentTodoAttributes["name"],$sentTodoAttributes["end_date"]);
+        (new \App\Todo)->createTodo($sentTodoAttributes["name"],$sentTodoAttributes["end_date"]);
 
         return redirect('/todo');
     }
@@ -48,22 +48,23 @@ class TodoController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
-        //
+        $todo = Todo::findOrFail($id);
+        return view("edit")->with("todo",$todo);
     }
 
     /**
@@ -71,11 +72,17 @@ class TodoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $todo = Todo::findOrFail($id);
+
+        $todo->update($request->all());
+
+        return redirect("/todo");
+
     }
 
     /**
