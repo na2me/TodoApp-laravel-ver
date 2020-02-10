@@ -17,7 +17,12 @@
 <br>
         {!! Form::hidden("id", $todo->id) !!}
         {!! Form::submit("Update") !!}
-    </div>
-    {!! Form::close() !!}
 
+    {!! Form::close() !!}
+<br>
+<br>
+    {!! Form::open(["method"=>"DELETE", "action"=>["TodoController@destroy",$todo->id]]) !!}
+        {!! Form::submit("Delete") !!}
+    {!! Form::close() !!}
+    </div>
 @endsection

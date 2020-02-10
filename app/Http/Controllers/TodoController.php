@@ -78,7 +78,6 @@ class TodoController extends Controller
     {
 
         $todo = Todo::findOrFail($id);
-
         $todo->update($request->all());
 
         return redirect("/todo");
@@ -89,10 +88,13 @@ class TodoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function destroy($id)
     {
-        //
+        $todo = Todo::findOrFail($id);
+        $todo->delete();
+
+        return redirect("/todo");
     }
 }
