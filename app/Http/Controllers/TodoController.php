@@ -1,13 +1,16 @@
-<?php
+<?php /** @noinspection PhpUndefinedNamespaceInspection */
+
 
 namespace App\Http\Controllers;
 
+
 use App\Todo;
 use Illuminate\Http\Request;
-use App\Http\Requests\TodoCreateRequest;
+use App\TodoService;
 
 class TodoController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +18,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::all();
+        $todos = (new Todo)->findAllTodos();
         $searchedName = "";
         return view('index',compact("todos","searchedName"));
     }
@@ -38,9 +41,8 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        $sentTodoAttributes=$request->all();
-
-        (new \App\Todo)->createTodo($sentTodoAttributes["name"],$sentTodoAttributes["end_date"]);
+        $sentTodoAttributes= (new TodoService)->parseAttributes($request);
+        (new Todo)->createTodo($sentTodoAttributes["name"],$sentTodoAttributes["end_date"]);
 
         return redirect('/todo');
     }
@@ -53,8 +55,8 @@ class TodoController extends Controller
      */
     public function show(Request $request)
     {
-        $searchedName = $request->input("name");
-        $todos = Todo::where("name","like","%".$searchedName."%")->get();
+        $searchedName = (new TodoService)->parseSearchedName($request);
+        $todos = Todo::findTodosByContainsName($searchedName);
 
         return view("index", compact(["todos","searchedName"]));
     }
@@ -67,7 +69,7 @@ class TodoController extends Controller
      */
     public function edit($id)
     {
-        $todo = Todo::findOrFail($id);
+        $todo = Todo::findTodoById($id);
         return view("edit")->with("todo",$todo);
     }
 
@@ -80,9 +82,8 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $todo = Todo::findOrFail($id);
-        $todo->update($request->all());
+        $todo = Todo::findTodoById($id);
+        Todo::updateTodo($todo,$request);
 
         return redirect("/todo");
 
@@ -96,8 +97,8 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        $todo = Todo::findOrFail($id);
-        $todo->delete();
+        $todo = Todo::findTodoById($id);
+        Todo::deleteTodo($todo);
 
         return redirect("/todo");
     }
