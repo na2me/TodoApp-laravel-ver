@@ -16,7 +16,8 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::all();
-        return view('index',compact("todos"));
+        $searchedName = "";
+        return view('index',compact("todos","searchedName"));
     }
 
     /**
@@ -47,12 +48,15 @@ class TodoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return string
      */
-    public function show($id)
+    public function show(Request $request)
     {
+        $searchedName = $request->input("name");
+        $todos = Todo::where("name","like","%".$searchedName."%")->get();
 
+        return view("index", compact(["todos","searchedName"]));
     }
 
     /**
@@ -97,4 +101,5 @@ class TodoController extends Controller
 
         return redirect("/todo");
     }
+
 }

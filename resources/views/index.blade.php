@@ -6,30 +6,15 @@
         <h1>Todo List</h1>
     </div>
 
+    {!! Form::open(["method"=>"GET", "action"=>"TodoController@show", "files"=>true]) !!}
     <div class="container" id="formgroup">
-        <form action="/todo" method="post">
-            <div>
-                <label for="name">Name : </label>
-                <input  type="text" id="name">
-            </div>
+        {!! Form::label("name", "Name : ") !!}
+        {!! Form::text("name", $searchedName) !!}
 
-            <div>
-                <label for="start">Start : </label>
-                <input type="date" id="start">
-            </div>
-
-            <div>
-                <label for="end"> End : </label>
-                <input type="date" id="end">
-            </div>
-
-            <input type="submit" value="Search">
-        </form>
-
+        {!! Form::submit("Search") !!}
     </div>
-
+    {!! Form::close() !!}
     <br>
-
     <div class="container">
         @foreach($todos as $todo)
             <p>Name : {{$todo->name}}</p>

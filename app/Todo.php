@@ -14,10 +14,6 @@ class Todo extends Model
     ];
 
     public function createTodo($name, $endDate){
-//        $todo = new Todo();
-//        $todo->name = $name;
-//        $todo->end_date = $endDate;
-//        $todo->save();
 
         Todo::create(["name"=>$name,"end_date"=>$endDate]);
     }
