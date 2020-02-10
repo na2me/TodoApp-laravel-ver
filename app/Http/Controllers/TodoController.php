@@ -103,4 +103,8 @@ class TodoController extends Controller
         return redirect("/todo");
     }
 
+    public function toggle(){
+        return "hi";
+    }
+
 }

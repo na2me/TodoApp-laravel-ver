@@ -20,11 +20,14 @@
             <p>Name : {{$todo->name}}</p>
             <p>Start Date : {{$todo->start_date}}</p>
             <p>End Date : {{$todo->end_date}}</p>
+            {!! Form::open(["method"=>"PATCH","action"=>"TodoController@toggle", "files"=>true]) !!}
             @if($todo->is_finished == 0)
-                <p>Status : Going</p>
+                {!! Form::submit("Status : Going") !!}
             @else
-                <p>Status : Done</p>
+                {!! Form::submit("Status : Done") !!}
             @endif
+            {!! Form::close() !!}
+            <br>
             <a href="{{ route('todo.edit', $todo->id) }}">Edit</a>
             <br>
             <br>
