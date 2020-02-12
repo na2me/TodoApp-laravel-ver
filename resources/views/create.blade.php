@@ -6,6 +6,11 @@
         <h1>Create new Todo</h1>
     </div>
 
+    @foreach($errors->all() as $error)
+        <i>{{$error}}</i>
+        <br>
+    @endforeach
+
 
     {!! Form::open(['method'=>"POST", "action"=>"TodoController@store", "files"=>true]) !!}
         <div class="container" id="formgroup">

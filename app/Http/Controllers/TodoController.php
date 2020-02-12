@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Todo;
 use Illuminate\Http\Request;
 use App\TodoService;
+use App\Http\Requests\TodoRequest;
 
 class TodoController extends Controller
 {
@@ -36,10 +37,10 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param TodoRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(TodoRequest $request)
     {
         $sentTodoAttributes= (new TodoService)->parseAttributes($request);
         (new Todo)->createTodo($sentTodoAttributes["name"],$sentTodoAttributes["end_date"]);
@@ -80,7 +81,7 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(TodoRequest $request, $id)
     {
         $todo = Todo::findTodoById($id);
         Todo::updateTodo($todo,$request);

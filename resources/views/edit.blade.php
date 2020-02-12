@@ -5,7 +5,13 @@
     <div class="container">
         <h1>Edit Todo</h1>
     </div>
+
 <br>
+    @foreach($errors->all() as $error)
+        <i>{{$error}}</i>
+        <br>
+    @endforeach
+
     {!! Form::model($todo,["method"=>"PUT","action"=>["TodoController@update", $todo->id]]) !!}
     {{csrf_field()}}
     <div class="container" id="formgroup">
