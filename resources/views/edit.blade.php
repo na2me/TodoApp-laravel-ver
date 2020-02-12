@@ -18,8 +18,8 @@
         {!! Form::label("name", "Name : ") !!}
         {!! Form::text("name", $todo->name) !!}
 <br>
-        {!! Form::label("endDate", "End Date : ") !!}
-        {!! Form::date("date", $todo->end_date) !!}
+        {!! Form::label("end_date", "End Date : ") !!}
+        {!! Form::date("end_date", $todo->end_date) !!}
 <br>
         {!! Form::hidden("id", $todo->id) !!}
         {!! Form::submit("Update") !!}

@@ -16,10 +16,10 @@
         <div class="container" id="formgroup">
         {!! Form::label('name', 'Name :') !!}
         {!! Form::text('name') !!}
-
+<br>
         {!! Form::label('end_date', "End Date :") !!}
         {!! Form::date('end_date') !!}
-
+<br>
         {!! Form::submit('Create') !!}
         </div>
     {!! Form::close() !!}
