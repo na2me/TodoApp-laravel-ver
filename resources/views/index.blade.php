@@ -21,6 +21,7 @@
             <p>Start Date : {{$todo->start_date}}</p>
             <p>End Date : {{$todo->end_date}}</p>
             {!! Form::open(["method"=>"PATCH","action"=>"TodoController@toggle", "files"=>true]) !!}
+            {!! Form::hidden("id",$todo->id) !!}
             @if($todo->is_finished == 0)
                 {!! Form::submit("Status : Going") !!}
             @else

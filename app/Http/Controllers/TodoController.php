@@ -103,8 +103,19 @@ class TodoController extends Controller
         return redirect("/todo");
     }
 
-    public function toggle(){
-        return "hi";
+
+    public function toggle(Request $request){
+        $todo = Todo::findTodoById($request->all()["id"]);
+
+        if ($todo->is_finished == 0){
+            $todo->is_finished = 1;
+        } else {
+            $todo->is_finished = 0;
+        }
+
+        $todo->save();
+        return redirect("/todo");
+
     }
 
 }
