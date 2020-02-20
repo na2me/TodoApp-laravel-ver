@@ -18,17 +18,41 @@ class TodoTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testTopVisit()
     {
-        $response = $this->get('/');
+        $response = $this->get('/todo');
 
         $response->assertStatus(200);
     }
 
 
-    public function testStore(){
+    public function testCreate(){
 
-        $this->assertTrue(true);
+        $response = $this->from('todo/create')->post('/todo',[
+            'name'=>'TEST TODO',
+            'end_date'=>'2055-05-05'
+        ]);
+        $this->assertDatabaseHas('todos',['name'=>'TEST TODO']);
+        $response->assertStatus(302)->assertRedirect('/todo');
+
+    }
+
+
+    public function testUpdate(){
+        $response = $this->from('todo/create')->post('/todo',[
+            'name'=>'TEST TODO',
+            'end_date'=>'2055-05-05'
+        ]);
+
+
+        $response = $this->from('todo/1/edit')->put('todo/1',[
+            'name'=>'TEST UPDATE LOGIC',
+            'end_date'=>'2033-03-03',
+            'id'=>1
+            ]);
+        $this->assertDatabaseHas('todos',['name'=>'TEST UPDATE LOGIC']);
+        $response->assertStatus(302)->assertRedirect('/todo');
+
     }
 
 }
