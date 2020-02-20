@@ -11,15 +11,16 @@
 |
 */
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::patch('/todo/toggle', 'TodoController@toggle');
 
+
 Route::resource('/todo','TodoController');
 
 Route::get('/todo/search','TodoController@show');
-
-
-
