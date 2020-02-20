@@ -55,6 +55,27 @@ class TodoTest extends TestCase
 
     }
 
+
+    public function testToggle()
+    {
+        $this->createExampleTodo();
+
+        $response = $this->from('todo')->patch('todo/toggle',[
+            'id'=>1
+        ]);
+        $this->assertTrue(Todo::findTodoById(1)->is_finished == 1);
+
+        $response = $this->from('todo')->patch('todo/toggle',[
+            'id'=>1
+        ]);
+        $this->assertTrue(Todo::findTodoById(1)->is_finished == 0);
+
+
+        $response->assertStatus(302)->assertRedirect('todo');
+    }
+
+
+
     public function createExampleTodo(){
         return $this->from('todo/create')->post('/todo',[
             'name'=>'TEST TODO',
