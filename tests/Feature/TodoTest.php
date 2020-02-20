@@ -26,24 +26,17 @@ class TodoTest extends TestCase
     }
 
 
-    public function testCreate(){
-
-        $response = $this->from('todo/create')->post('/todo',[
-            'name'=>'TEST TODO',
-            'end_date'=>'2055-05-05'
-        ]);
+    public function testCreate()
+    {
+        $response = $this->createExampleTodo();
         $this->assertDatabaseHas('todos',['name'=>'TEST TODO']);
         $response->assertStatus(302)->assertRedirect('/todo');
-
     }
 
 
-    public function testUpdate(){
-        $response = $this->from('todo/create')->post('/todo',[
-            'name'=>'TEST TODO',
-            'end_date'=>'2055-05-05'
-        ]);
-
+    public function testUpdate()
+    {
+        $this->createExampleTodo();
 
         $response = $this->from('todo/1/edit')->put('todo/1',[
             'name'=>'TEST UPDATE LOGIC',
@@ -52,7 +45,21 @@ class TodoTest extends TestCase
             ]);
         $this->assertDatabaseHas('todos',['name'=>'TEST UPDATE LOGIC']);
         $response->assertStatus(302)->assertRedirect('/todo');
+    }
 
+    public function testDelete(){
+        $this->createExampleTodo();
+
+        $response = $this->from('todo/1/edit')->delete('todo/1');
+        $response->assertStatus(302)->assertRedirect('/todo');
+
+    }
+
+    public function createExampleTodo(){
+        return $this->from('todo/create')->post('/todo',[
+            'name'=>'TEST TODO',
+            'end_date'=>'2055-05-05'
+        ]);
     }
 
 }
