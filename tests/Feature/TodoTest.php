@@ -47,7 +47,8 @@ class TodoTest extends TestCase
         $response->assertStatus(302)->assertRedirect('/todo');
     }
 
-    public function testDelete(){
+    public function testDelete()
+    {
         $this->createExampleTodo();
 
         $response = $this->from('todo/1/edit')->delete('todo/1');
@@ -72,6 +73,24 @@ class TodoTest extends TestCase
 
 
         $response->assertStatus(302)->assertRedirect('todo');
+    }
+
+
+    public function testSearch()
+    {
+        $this->createExampleTodo();
+
+        $response = $this->call('GET','/todo/search',[
+           'name'=>'TEST'
+        ]);
+        $response->assertSee('TEST TODO');
+
+        $response = $this->call('GET','/todo/search',[
+            'name'=>'NOPE'
+        ]);
+        $response->assertDontSee('TEST TODO');
+
+        $response->assertStatus(200);
     }
 
 
