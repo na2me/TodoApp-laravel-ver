@@ -116,7 +116,11 @@ class TodoController extends Controller
 
         $todo->save();
         return redirect("/todo");
+    }
 
+    public function registerUser()
+    {
+        return view ('register');
     }
 
 }

@@ -12,7 +12,9 @@
 <body>
     <nav class="navbar navbar-light bg-dark">
         <a class="navbar-brand mb-0 text-white h1" href="/todo">Todo App</a>
-        <a class="navbar-text text-white" href="/todo/create">Create</a>
+        <a class="navbar-text text-white" href="/todo/create">Create New Todo</a>
+        <a class="navbar-text text-white" href="/todo/register">Register New User</a>
+        <a class="navbar-text text-white" href="/todo/create">Login</a>
     </nav>
 
     <div class="container">

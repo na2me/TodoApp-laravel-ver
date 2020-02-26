@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::patch('/todo/toggle', 'TodoController@toggle');
 
+Route::get('/todo/register', 'TodoController@registerUser');
+
 
 Route::resource('/todo','TodoController');
 
