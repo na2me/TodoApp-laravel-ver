@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Todo;
+use App\User;
 use Illuminate\Http\Request;
 use App\TodoService;
 use App\Http\Requests\TodoRequest;
@@ -119,6 +120,11 @@ class TodoController extends Controller
         return redirect("/todo");
     }
 
+
+
+
+
+    // User logic
     public function register()
     {
         return view ('register');
@@ -126,7 +132,12 @@ class TodoController extends Controller
 
     public function storeUser(UserRequest $request)
     {
-        return dd($request->all());
+        $sentAttributes = $request->all();
+
+        User::create(['name'=>$sentAttributes['name'],'email'=>$sentAttributes['email'],'password'=>$sentAttributes['password']]);
+
+        //login no logic to redirect to top
+        return redirect('/todo');
     }
 
 }
