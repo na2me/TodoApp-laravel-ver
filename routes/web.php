@@ -22,6 +22,8 @@ Route::patch('/todo/toggle', 'TodoController@toggle');
 
 Route::get('/todo/register', 'TodoController@register');
 Route::post('/todo/store/user', 'TodoController@storeUser');
+Route::get('/todo/login','TodoController@login');
+Route::post('/todo/login','TodoController@authenticate');
 
 
 Route::resource('/todo','TodoController');

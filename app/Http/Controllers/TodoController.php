@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\TodoService;
 use App\Http\Requests\TodoRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -138,6 +139,21 @@ class TodoController extends Controller
 
         //login no logic to redirect to top
         return redirect('/todo');
+    }
+
+    public function login()
+    {
+        return view('login');
+    }
+
+    public function authenticate(Request $request)
+    {
+        $user = User::where('email',$request['email']);
+        dd($user);
+//        if (Auth::login($sentAttributes)) {
+//            return redirect('/todo');
+//        }
+        return $user;
     }
 
 }
