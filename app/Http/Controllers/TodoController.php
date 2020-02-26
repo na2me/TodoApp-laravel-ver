@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\UserRequest;
 use App\Todo;
 use Illuminate\Http\Request;
 use App\TodoService;
@@ -118,9 +119,14 @@ class TodoController extends Controller
         return redirect("/todo");
     }
 
-    public function registerUser()
+    public function register()
     {
         return view ('register');
+    }
+
+    public function storeUser(UserRequest $request)
+    {
+        return dd($request->all());
     }
 
 }
