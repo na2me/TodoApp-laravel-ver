@@ -138,7 +138,7 @@ class TodoController extends Controller
         User::create(['name'=>$sentAttributes['name'],'email'=>$sentAttributes['email'],'password'=>$sentAttributes['password']]);
 
         //login no logic to redirect to top
-        return redirect('/todo');
+        return redirect('todo');
     }
 
     public function login()
@@ -148,12 +148,10 @@ class TodoController extends Controller
 
     public function authenticate(Request $request)
     {
-        $user = User::where('email',$request['email']);
-        dd($user);
-//        if (Auth::login($sentAttributes)) {
-//            return redirect('/todo');
-//        }
-        return $user;
+        $user = User::where('email',$request['email'])
+            ->where('password',$request['password'])->get()[0];
+        Auth::login($user);
+        return redirect('todo');
     }
 
 }
