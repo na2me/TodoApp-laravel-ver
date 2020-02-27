@@ -154,4 +154,10 @@ class TodoController extends Controller
         return redirect('todo');
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('todo');
+    }
+
 }

@@ -14,7 +14,11 @@
         <a class="navbar-brand mb-0 text-white h1" href="/todo">Todo App</a>
         <a class="navbar-text text-white" href="/todo/create">Create New Todo</a>
         <a class="navbar-text text-white" href="/todo/register">Register New User</a>
-        <a class="navbar-text text-white" href="/todo/login">Login</a>
+        @if (!Auth::check())
+            <a class="navbar-text text-white" href="/todo/login">Login</a>
+        @else
+            <a class="navbar-text text-white" href="/todo/logout">Logout</a>
+        @endif
     </nav>
 
     <div class="container">

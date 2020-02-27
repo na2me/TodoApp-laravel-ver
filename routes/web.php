@@ -24,6 +24,7 @@ Route::get('/todo/register', 'TodoController@register');
 Route::post('/todo/store/user', 'TodoController@storeUser');
 Route::get('/todo/login','TodoController@login');
 Route::post('/todo/login','TodoController@authenticate');
+Route::get('/todo/logout','TodoController@logout');
 
 
 Route::resource('/todo','TodoController');
