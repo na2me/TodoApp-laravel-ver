@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Todo;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class TodoTest extends TestCase
@@ -94,12 +96,45 @@ class TodoTest extends TestCase
     }
 
 
+    public function testLogin()
+    {
+        $this->createExampleUser();
+        $this->assertDatabaseHas('users',[
+            'name'=>'test name',
+            'email'=>'test@test.com',
+            'password'=>1234,
+        ]);
+        $user = User::where('email','test@test.com')
+            ->where('password',1234)->get()[0];
 
-    public function createExampleTodo(){
+        $response = $this->from('/login')
+                            ->post('/todo/login',[
+                                'email'=>$user->email,
+                                'password'=>$user->password,
+                            ]);
+        $this->assertTrue(Auth::check());
+        $response->assertStatus(302)->assertRedirect('todo');
+    }
+
+
+    public function createExampleTodo()
+    {
         return $this->from('todo/create')->post('/todo',[
             'name'=>'TEST TODO',
             'end_date'=>'2055-05-05'
         ]);
     }
+
+    public function createExampleUser()
+    {
+        $this->from('/todo/register')->post('/todo/store/user',[
+            'name'=>'test name',
+            'email'=>'test@test.com',
+            'password'=>1234,
+        ]);
+    }
+
+
+
 
 }
