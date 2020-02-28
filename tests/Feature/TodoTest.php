@@ -98,22 +98,19 @@ class TodoTest extends TestCase
 
     public function testLogin()
     {
-        $this->createExampleUser();
-        $this->assertDatabaseHas('users',[
-            'name'=>'test name',
-            'email'=>'test@test.com',
-            'password'=>1234,
-        ]);
-        $user = User::where('email','test@test.com')
-            ->where('password',1234)->get()[0];
-
-        $response = $this->from('/login')
-                            ->post('/todo/login',[
-                                'email'=>$user->email,
-                                'password'=>$user->password,
-                            ]);
+        $response = $this->loginExampleUser();
         $this->assertTrue(Auth::check());
         $response->assertStatus(302)->assertRedirect('todo');
+    }
+
+    public function testLogout()
+    {
+        $this->loginExampleUser();
+        $this->assertTrue(Auth::check());
+        $response = $this->get('/todo/logout');
+        $response->assertStatus(302)->assertRedirect('/todo');
+
+        $this->assertTrue(!Auth::check());
     }
 
 
@@ -132,6 +129,24 @@ class TodoTest extends TestCase
             'email'=>'test@test.com',
             'password'=>1234,
         ]);
+    }
+
+    public function loginExampleUser()
+    {
+        $this->createExampleUser();
+        $this->assertDatabaseHas('users',[
+            'name'=>'test name',
+            'email'=>'test@test.com',
+            'password'=>1234,
+        ]);
+        $user = User::where('email','test@test.com')
+            ->where('password',1234)->get()[0];
+
+        return $response = $this->from('/login')
+            ->post('/todo/login',[
+                'email'=>$user->email,
+                'password'=>$user->password,
+            ]);
     }
 
 
