@@ -47,7 +47,8 @@ class TodoController extends Controller
     public function store(TodoRequest $request)
     {
         $sentTodoAttributes= (new TodoService)->parseAttributes($request);
-        (new Todo)->createTodo($sentTodoAttributes["name"],$sentTodoAttributes["end_date"]);
+        $userId = Auth::user()->id;
+        (new Todo)->createTodo($sentTodoAttributes["name"],$sentTodoAttributes["end_date"],$userId);
 
         return redirect('/todo');
     }
@@ -134,11 +135,10 @@ class TodoController extends Controller
 
     public function storeUser(UserRequest $request)
     {
-        $sentAttributes = $request->all();
+        User::create(['name'=>$request['name'],'email'=>$request['email'],'password'=>$request['password']]);
 
-        User::create(['name'=>$sentAttributes['name'],'email'=>$sentAttributes['email'],'password'=>$sentAttributes['password']]);
+        (new TodoService)->loginUser($request['email'],$request['password']);
 
-        //login no logic to redirect to top
         return redirect('todo');
     }
 
@@ -149,9 +149,8 @@ class TodoController extends Controller
 
     public function authenticate(Request $request)
     {
-        $user = User::where('email',$request['email'])
-            ->where('password',$request['password'])->get()[0];
-        Auth::login($user);
+        (new TodoService)->loginUser($request['email'],$request['password']);
+
         return redirect('todo');
     }
 

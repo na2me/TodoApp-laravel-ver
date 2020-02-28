@@ -14,12 +14,13 @@ class Todo extends Model
       'name',
         'start_date',
         'end_date',
-        'is_finished'
+        'is_finished',
+        'user_id',
     ];
 
-    public static function createTodo($name, $endDate)
+    public static function createTodo($name, $endDate, $userId)
     {
-        Todo::create(["name"=>$name,"end_date"=>$endDate]);
+        Todo::create(["name"=>$name,"end_date"=>$endDate,'user_id'=>$userId]);
     }
 
     public static function updateTodo($todo, $request)
