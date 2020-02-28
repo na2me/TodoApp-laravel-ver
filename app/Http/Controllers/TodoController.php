@@ -22,7 +22,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = (new Todo)->findAllTodos();
+//        $todos = (new Todo)->findAllTodos();
+        $todos = User::find(1)->todos;
         $searchedName = "";
         return view('index',compact("todos","searchedName"));
     }
