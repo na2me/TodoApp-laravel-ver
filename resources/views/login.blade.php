@@ -2,6 +2,10 @@
 
 @section("content")
 
+    @if(!Auth::check())
+        <h3>Please login to use Todo application</h3>
+    @endif
+
     <div class="container">
         <h1>Login</h1>
     </div>
