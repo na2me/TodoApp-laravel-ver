@@ -22,6 +22,7 @@ class TodoTest extends TestCase
      */
     public function testTopVisit()
     {
+        $this->loginExampleUser();
         $response = $this->get('/todo');
 
         $response->assertStatus(200);
@@ -30,6 +31,7 @@ class TodoTest extends TestCase
 
     public function testCreate()
     {
+        $this->loginExampleUser();
         $response = $this->createExampleTodo();
         $this->assertDatabaseHas('todos',['name'=>'TEST TODO']);
         $response->assertStatus(302)->assertRedirect('/todo');
@@ -38,6 +40,7 @@ class TodoTest extends TestCase
 
     public function testUpdate()
     {
+        $this->loginExampleUser();
         $this->createExampleTodo();
 
         $response = $this->from('todo/1/edit')->put('todo/1',[
@@ -51,6 +54,7 @@ class TodoTest extends TestCase
 
     public function testDelete()
     {
+        $this->loginExampleUser();
         $this->createExampleTodo();
 
         $response = $this->from('todo/1/edit')->delete('todo/1');
@@ -61,6 +65,7 @@ class TodoTest extends TestCase
 
     public function testToggle()
     {
+        $this->loginExampleUser();
         $this->createExampleTodo();
 
         $response = $this->from('todo')->patch('todo/toggle',[
@@ -80,6 +85,7 @@ class TodoTest extends TestCase
 
     public function testSearch()
     {
+        $this->loginExampleUser();
         $this->createExampleTodo();
 
         $response = $this->call('GET','/todo/search',[

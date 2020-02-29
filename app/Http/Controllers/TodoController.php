@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Todo;
 use App\User;
@@ -46,9 +47,8 @@ class TodoController extends Controller
      */
     public function store(TodoRequest $request)
     {
-        $sentTodoAttributes= (new TodoService)->parseAttributes($request);
         $userId = Auth::user()->id;
-        (new Todo)->createTodo($sentTodoAttributes["name"],$sentTodoAttributes["end_date"],$userId);
+        (new Todo)->createTodo($request['name'],$request["end_date"],$userId);
 
         return redirect('/todo');
     }
@@ -147,7 +147,7 @@ class TodoController extends Controller
         return view('login');
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(LoginRequest $request)
     {
         (new TodoService)->loginUser($request['email'],$request['password']);
 
