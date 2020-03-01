@@ -130,7 +130,8 @@ class TodoController extends Controller
     // User logic
     public function register()
     {
-        return view ('register');
+        $exception = null;
+        return view ('register',compact('exception'));
     }
 
     public function storeUser(UserRequest $request)

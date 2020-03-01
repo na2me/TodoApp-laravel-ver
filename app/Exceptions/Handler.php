@@ -3,8 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use function Sodium\compare;
 
 class Handler extends ExceptionHandler
 {
@@ -51,6 +53,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof QueryException){
+//            return redirect('todo/register');
+            return response()->view('register',['exception'=>$exception],500);
+        }
+
         return parent::render($request, $exception);
     }
 

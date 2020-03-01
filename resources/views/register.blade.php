@@ -6,6 +6,10 @@
         <h1>Register new User</h1>
     </div>
 
+    @if($exception)
+        <p>The same user is already created before. Please check...</p>
+    @endif
+
     @foreach($errors->all() as $error)
         <i>{{$error}}</i>
         <br>

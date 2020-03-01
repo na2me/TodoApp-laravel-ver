@@ -119,7 +119,7 @@ class TodoTest extends TestCase
         $this->assertTrue(!Auth::check());
     }
 
-    public function testMiddleware()
+    public function testAuthMiddleware()
     {
         $response = $this->get('todo');
         $response->assertStatus(302)->assertRedirect('todo/login');
@@ -145,6 +145,15 @@ class TodoTest extends TestCase
         $response->assertSeeText('Sorry, the URL is invalid');
     }
 
+    public function testQueryExceptionHandling()
+    {
+        //trying to create the exact same user to let the exception occur
+        $this->createExampleUser();
+        $response = $this->createExampleUser();
+        $response->assertStatus(500);
+        $response->assertSeeText('The same user is already created before. Please check');
+    }
+
 
     public function createExampleTodo()
     {
@@ -156,7 +165,7 @@ class TodoTest extends TestCase
 
     public function createExampleUser()
     {
-        $this->from('/todo/register')->post('/todo/store/user',[
+        return $this->from('/todo/register')->post('/todo/store/user',[
             'name'=>'test name',
             'email'=>'test@test.com',
             'password'=>1234,
