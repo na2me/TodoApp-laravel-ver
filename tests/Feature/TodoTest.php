@@ -137,6 +137,14 @@ class TodoTest extends TestCase
         $response->assertSeeText('Sorry, no page found for the URL');
     }
 
+    public function test405Handling()
+    {
+        $urlForPost = 'todo/store/user';
+        $response = $this->get($urlForPost);
+        $response->assertStatus(405);
+        $response->assertSeeText('Sorry, the URL is invalid');
+    }
+
 
     public function createExampleTodo()
     {
