@@ -119,6 +119,16 @@ class TodoTest extends TestCase
         $this->assertTrue(!Auth::check());
     }
 
+    public function testMiddleware()
+    {
+        $response = $this->get('todo');
+        $response->assertStatus(302)->assertRedirect('todo/login');
+
+        $this->loginExampleUser();
+        $response2 = $this->get('todo');
+        $response2->assertStatus(200);
+    }
+
 
     public function createExampleTodo()
     {
