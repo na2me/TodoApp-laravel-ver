@@ -129,6 +129,14 @@ class TodoTest extends TestCase
         $response2->assertStatus(200);
     }
 
+    public function test404Handling()
+    {
+        $invalidUrl = '/todo/crate/INVALID';
+        $response = $this->get($invalidUrl);
+        $response->assertStatus(404);
+        $response->assertSeeText('Sorry, no page found for the URL');
+    }
+
 
     public function createExampleTodo()
     {
