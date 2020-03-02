@@ -113,11 +113,7 @@ class TodoController extends Controller
     public function toggle(Request $request){
         $todo = (new TodoRepository)->findTodoById($request->all()["id"]);
 
-        if ($todo->is_finished == 0){
-            $todo->is_finished = 1;
-        } else {
-            $todo->is_finished = 0;
-        }
+        $todo->is_finished = (new TodoService)->toggleStatus($todo->is_finished);
 
         (new TodoRepository)->saveTodo($todo);
         return redirect("/todo");
