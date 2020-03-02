@@ -4,7 +4,7 @@
 namespace App\Repository;
 
 
-use App\Model\Todo;
+use App\Todo;
 
 class TodoRepository
 {

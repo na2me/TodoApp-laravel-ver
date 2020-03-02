@@ -3,8 +3,7 @@
 namespace Tests\Feature;
 
 use App\Repository\TodoRepository;
-use App\Todo;
-use App\User;
+use App\Repository\UserRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -171,8 +170,8 @@ class TodoTest extends TestCase
             'email'=>'test@test.com',
             'password'=>1234,
         ]);
-        $user = User::where('email','test@test.com')
-            ->where('password',1234)->get()[0];
+
+	$user = (new UserRepository)->findUserByEmailAndPassword('test@test.com',1234);
 
         return $response = $this->from('/login')
             ->post('/todo/login',[
