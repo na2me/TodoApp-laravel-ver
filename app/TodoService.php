@@ -4,6 +4,7 @@
 namespace App;
 
 
+use App\Repository\UserRepository;
 use Illuminate\Support\Facades\Auth;
 
 class TodoService
@@ -16,11 +17,6 @@ class TodoService
     {
     }
 
-    public function parseAttributes($request)
-    {
-        return $request->all();
-    }
-
     public function parseSearchedName($request)
     {
         return $request->input("name");
@@ -28,8 +24,16 @@ class TodoService
 
     public function loginUser($email,$password)
     {
-        $user = User::where('email',$email)
-            ->where('password',$password)->get()[0];
+        $user = (new UserRepository)->findUserByEmailAndPassword($email,$password);
         Auth::login($user);
+    }
+
+    public function toggleStatus($is_finished)
+    {
+        if ($is_finished == 0){
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

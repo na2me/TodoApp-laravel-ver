@@ -2,12 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Repository\TodoRepository;
 use App\Todo;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
@@ -28,7 +26,6 @@ class TodoTest extends TestCase
         $response->assertStatus(200);
     }
 
-
     public function testCreate()
     {
         $this->loginExampleUser();
@@ -36,7 +33,6 @@ class TodoTest extends TestCase
         $this->assertDatabaseHas('todos',['name'=>'TEST TODO']);
         $response->assertStatus(302)->assertRedirect('/todo');
     }
-
 
     public function testUpdate()
     {
@@ -59,9 +55,7 @@ class TodoTest extends TestCase
 
         $response = $this->from('todo/1/edit')->delete('todo/1');
         $response->assertStatus(302)->assertRedirect('/todo');
-
     }
-
 
     public function testToggle()
     {
@@ -71,17 +65,16 @@ class TodoTest extends TestCase
         $response = $this->from('todo')->patch('todo/toggle',[
             'id'=>1
         ]);
-        $this->assertTrue(Todo::findTodoById(1)->is_finished == 1);
+        $this->assertTrue((new TodoRepository)->findTodoById(1)->is_finished == 1);
 
         $response = $this->from('todo')->patch('todo/toggle',[
             'id'=>1
         ]);
-        $this->assertTrue(Todo::findTodoById(1)->is_finished == 0);
+        $this->assertTrue((new TodoRepository)->findTodoById(1)->is_finished == 0);
 
 
         $response->assertStatus(302)->assertRedirect('todo');
     }
-
 
     public function testSearch()
     {
@@ -100,7 +93,6 @@ class TodoTest extends TestCase
 
         $response->assertStatus(200);
     }
-
 
     public function testLogin()
     {
@@ -147,13 +139,12 @@ class TodoTest extends TestCase
 
     public function testQueryExceptionHandling()
     {
-        //trying to create the exact same user to let the exception occur
+        //trying to create the exact same user to let QueryException occur
         $this->createExampleUser();
         $response = $this->createExampleUser();
         $response->assertStatus(500);
         $response->assertSeeText('The same user is already created before. Please check');
     }
-
 
     public function createExampleTodo()
     {
@@ -189,8 +180,4 @@ class TodoTest extends TestCase
                 'password'=>$user->password,
             ]);
     }
-
-
-
-
 }

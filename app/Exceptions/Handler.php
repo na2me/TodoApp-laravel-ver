@@ -54,7 +54,6 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof QueryException){
-//            return redirect('todo/register');
             return response()->view('register',['exception'=>$exception],500);
         }
 

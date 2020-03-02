@@ -6,12 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
-use App\Todo;
-use App\User;
+use App\Repository\TodoRepository;
 use Illuminate\Http\Request;
 use App\TodoService;
 use App\Http\Requests\TodoRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Repository\UserRepository;
 
 class TodoController extends Controller
 {
@@ -24,7 +24,7 @@ class TodoController extends Controller
     public function index()
     {
         $userId = Auth::user()->id;
-        $todos = User::find($userId)->todos;
+        $todos = (new UserRepository)->findUserById($userId)->todos;
         $searchedName = "";
         return view('index',compact("todos","searchedName"));
     }
@@ -48,7 +48,7 @@ class TodoController extends Controller
     public function store(TodoRequest $request)
     {
         $userId = Auth::user()->id;
-        (new Todo)->createTodo($request['name'],$request["end_date"],$userId);
+        (new TodoRepository)->createTodo($request['name'],$request["end_date"],$userId);
 
         return redirect('/todo');
     }
@@ -62,7 +62,7 @@ class TodoController extends Controller
     public function show(Request $request)
     {
         $searchedName = (new TodoService)->parseSearchedName($request);
-        $todos = Todo::findTodosByContainsName($searchedName);
+        $todos = (new TodoRepository)->findTodosByContainsName($searchedName);
 
         return view("index", compact(["todos","searchedName"]));
     }
@@ -75,8 +75,8 @@ class TodoController extends Controller
      */
     public function edit($id)
     {
-        $todo = Todo::findTodoById($id);
-        return view("edit")->with("todo",$todo);
+        $todo = (new TodoRepository)->findTodoById($id);
+        return view('edit',compact('todo'));
     }
 
     /**
@@ -88,8 +88,8 @@ class TodoController extends Controller
      */
     public function update(TodoRequest $request, $id)
     {
-        $todo = Todo::findTodoById($id);
-        Todo::updateTodo($todo,$request);
+        $todo = (new TodoRepository)->findTodoById($id);
+        (new TodoRepository)->updateTodo($todo,$request);
 
         return redirect("/todo");
 
@@ -103,15 +103,15 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        $todo = Todo::findTodoById($id);
-        Todo::deleteTodo($todo);
+        $todo = (new TodoRepository)->findTodoById($id);
+        (new TodoRepository)->deleteTodo($todo);
 
         return redirect("/todo");
     }
 
 
     public function toggle(Request $request){
-        $todo = Todo::findTodoById($request->all()["id"]);
+        $todo = (new TodoRepository)->findTodoById($request->all()["id"]);
 
         if ($todo->is_finished == 0){
             $todo->is_finished = 1;
@@ -119,15 +119,10 @@ class TodoController extends Controller
             $todo->is_finished = 0;
         }
 
-        $todo->save();
+        (new TodoRepository)->saveTodo($todo);
         return redirect("/todo");
     }
 
-
-
-
-
-    // User logic
     public function register()
     {
         $exception = null;
@@ -136,7 +131,7 @@ class TodoController extends Controller
 
     public function storeUser(UserRequest $request)
     {
-        User::create(['name'=>$request['name'],'email'=>$request['email'],'password'=>$request['password']]);
+        (new UserRepository)->createUser($request['name'],$request['email'],$request['password']);
 
         (new TodoService)->loginUser($request['email'],$request['password']);
 
