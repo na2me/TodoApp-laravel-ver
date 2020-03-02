@@ -11,14 +11,6 @@
 |
 */
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/todo/login','TodoController@login');
 Route::post('/todo/login','TodoController@authenticate');

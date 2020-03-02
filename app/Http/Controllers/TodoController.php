@@ -8,7 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Repository\TodoRepository;
 use Illuminate\Http\Request;
-use App\TodoService;
+use App\Service\TodoService;
 use App\Http\Requests\TodoRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Repository\UserRepository;
@@ -121,6 +121,7 @@ class TodoController extends Controller
 
     public function register()
     {
+        // if Query Exception occur while registering a new user, it will not be null and let announcement appear
         $exception = null;
         return view ('register',compact('exception'));
     }
