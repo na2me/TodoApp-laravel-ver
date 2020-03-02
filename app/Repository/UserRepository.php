@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\User;
+use App\Model\User;
 
 class UserRepository
 {
